@@ -16,8 +16,8 @@ const inputsItem4 = document.getElementsByClassName('total-input')[4];
 let screens = document.querySelectorAll('.screen');
 
 console.log(title);
-console.log(btns1);
-console.log(btns2);
+console.log(btn1);
+console.log(btn2);
 console.log(btnPlus);
 console.log(otherItemsPercent);
 console.log(otherItemsNumber);
