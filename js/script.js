@@ -1,8 +1,8 @@
 'use strict';
 
 const title = document.getElementsByTagName('h1')[0];
-const btn1 = document.getElementsByClassName('handler_btn')[0];
-const btn2 = document.getElementsByClassName('handler_btn')[1];
+const startBtn = document.getElementsByClassName('handler_btn')[0];
+const resetBtn = document.getElementsByClassName('handler_btn')[1];
 const btnPlus = document.querySelector('.screen-btn');
 const otherItemsPercent = document.querySelectorAll('.other-items.percent');
 const otherItemsNumber = document.querySelectorAll('.other-items.number');
@@ -16,8 +16,8 @@ const inputsItem4 = document.getElementsByClassName('total-input')[4];
 let screens = document.querySelectorAll('.screen');
 
 console.log(title);
-console.log(btn1);
-console.log(btn2);
+console.log(startBtn);
+console.log(resetBtn);
 console.log(btnPlus);
 console.log(otherItemsPercent);
 console.log(otherItemsNumber);
