@@ -13,6 +13,9 @@ const totalCount = document.getElementsByClassName('total-input')[1];
 const totalCountOther = document.getElementsByClassName('total-input')[2];
 const fullTotalCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
+const screenSelects = document.querySelector('select[name=views-select]');
+const screenInputs = document.querySelector('.screen input[type=text]');
+
 let screens = document.querySelectorAll('.screen');
 
 const appData = {
@@ -20,17 +23,21 @@ const appData = {
   screens: [],
   screenPrice: 0,
   adaptive: true,
-  rollback: 10,
+  rollback: '',
   servicePricesPercent: 0,
   servicePricesNumber: 0,
   fullPrice: 0,
   servicePercentPrice: 0,
   servicesPercent: {},
   servicesNumber: {},
+  countScreens: 0,
   init: function () {
-    appData.addTitle(),
-      startBtn.addEventListener('click', appData.start);
-    buttonPlus.addEventListener('click', appData.addScreenBlock)
+    appData.addTitle();
+    startBtn.addEventListener('click', function () {
+      if (appData.checkFields(screenSelects, screenInputs)) appData.start();
+    });
+    buttonPlus.addEventListener('click', appData.addScreenBlock);
+    appData.changeRollback();
   },
   addTitle: function () {
     document.title = title.textContent;
@@ -40,16 +47,27 @@ const appData = {
     appData.addServices();
     appData.addPrices();
     appData.showResult();
-    // appData.getServicePercentPrices();
     // appData.logger();
-    console.log(appData);
+  },
+  checkFields: function (select, input) {
+    if (select.value !== '' && input.value !== '') {
+      return true
+    } else {
+      return false
+    }
+  },
+  changeRollback: function () {
+    inputRollback.addEventListener('input', function (event) {
+      spanRollback.textContent = event.target.value + '%';
+      appData.rollback = event.target.value;
+    })
   },
   showResult: function () {
     total.value = appData.screenPrice;
-    totalCount.value = appData.screens.length
     totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber
     fullTotalCount.value = appData.fullPrice
-    console.log("showResult");
+    totalCountRollback.value = appData.servicePercentPrice
+    totalCount.value = appData.countScreens
   },
   addScreens: function () {
     screens = document.querySelectorAll('.screen');
@@ -57,11 +75,13 @@ const appData = {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
       const selectName = select.options[select.selectedIndex].textContent
+      const countScreens = input.value
 
       appData.screens.push({
         id: index,
         name: selectName,
-        price: +select.value * +input.value
+        price: +select.value * +input.value,
+        count: countScreens
       })
     })
   },
@@ -84,6 +104,7 @@ const appData = {
     })
   },
   addScreenBlock: function () {
+    screens = document.querySelectorAll('.screen');
     const cloneScreen = screens[0].cloneNode(true);
     screens[screens.length - 1].after(cloneScreen);
   },
@@ -98,25 +119,12 @@ const appData = {
       appData.servicePricesPercent += appData.screenPrice * (appData.servicesPercent[key] / 100)
     }
     appData.fullPrice = +appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
-  },
-  getServicePercentPrices: function getServicePercentPrices() {
+
     appData.servicePercentPrice = appData.fullPrice - (appData.fullPrice * (appData.rollback / 100));
-  },
-  getRollbackMessage: function (price) {
-    switch (true) {
-      case price >= 30000:
-        return "Даем скидку в 10%";
-        break
-      case price >= 15000 && price < 30000:
-        return 'Даем скидку в 5%';
-        break
-      case price >= 0 && price < 15000:
-        return 'Скидка не предусмотрена';
-        break
-      case price < 0:
-        return 'Что то пошло не так';
-        break
-    }
+
+    appData.screens.forEach(function (item) {
+      appData.countScreens += +item.count;
+    });
   },
   logger: function () {
     for (let key in appData) {
