@@ -13,10 +13,10 @@ const totalCount = document.getElementsByClassName('total-input')[1];
 const totalCountOther = document.getElementsByClassName('total-input')[2];
 const fullTotalCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
-const screenSelects = document.querySelector('select[name=views-select]');
-const screenInputs = document.querySelector('.screen input[type=text]');
 
 let screens = document.querySelectorAll('.screen');
+let screenSelects = document.querySelectorAll('.screen select[name=views-select]');
+let screenInputs = document.querySelectorAll('.screen input[type=text]');
 
 const appData = {
   title: '',
@@ -50,11 +50,19 @@ const appData = {
     // appData.logger();
   },
   checkFields: function (select, input) {
-    if (select.value !== '' && input.value !== '') {
-      return true
-    } else {
-      return false
-    }
+    screens = document.querySelectorAll('.screen');
+    let allFieldsFilled = true;
+    screens.forEach(function (screen) {
+      const select = screen.querySelector('select');
+      const input = screen.querySelector('input');
+      const selectValue = select.options[select.selectedIndex].value;
+      const inputValue = input.value;
+      if (selectValue === '' || inputValue === '') {
+        allFieldsFilled = false;
+        return;
+      }
+    });
+    return allFieldsFilled;
   },
   changeRollback: function () {
     inputRollback.addEventListener('input', function (event) {
