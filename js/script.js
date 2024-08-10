@@ -13,10 +13,10 @@ const totalCount = document.getElementsByClassName('total-input')[1];
 const totalCountOther = document.getElementsByClassName('total-input')[2];
 const fullTotalCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
+const screenSelects = document.querySelectorAll('.screen select[name=views-select]');
+const screenInputs = document.querySelectorAll('.screen input[type=text]');
 
 let screens = document.querySelectorAll('.screen');
-let screenSelects = document.querySelectorAll('.screen select[name=views-select]');
-let screenInputs = document.querySelectorAll('.screen input[type=text]');
 
 const appData = {
   title: '',
