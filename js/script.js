@@ -13,8 +13,6 @@ const totalCount = document.getElementsByClassName('total-input')[1];
 const totalCountOther = document.getElementsByClassName('total-input')[2];
 const fullTotalCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
-const screenSelects = document.querySelectorAll('.screen select[name=views-select]');
-const screenInputs = document.querySelectorAll('.screen input[type=text]');
 
 let screens = document.querySelectorAll('.screen');
 
@@ -34,7 +32,7 @@ const appData = {
   init: function () {
     appData.addTitle();
     startBtn.addEventListener('click', function () {
-      if (appData.checkFields(screenSelects, screenInputs)) appData.start();
+      if (appData.checkFields()) appData.start();
     });
     buttonPlus.addEventListener('click', appData.addScreenBlock);
     appData.changeRollback();
@@ -49,7 +47,7 @@ const appData = {
     appData.showResult();
     // appData.logger();
   },
-  checkFields: function (select, input) {
+  checkFields: function () {
     screens = document.querySelectorAll('.screen');
     let allFieldsFilled = true;
     screens.forEach(function (screen) {
