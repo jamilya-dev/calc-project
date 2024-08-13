@@ -73,7 +73,7 @@ const appData = {
     });
 
     this.screens.forEach((screen, index) => {
-      if (screen.id !== 0) {
+      if (screen.id !== 0 && screens[index]) {
         screens[index].remove();
       }
     });
