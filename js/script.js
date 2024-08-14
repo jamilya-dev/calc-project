@@ -72,11 +72,10 @@ const appData = {
       input.value = '';
     });
 
-    this.screens.forEach((screen, index) => {
-      if (screen.id !== 0 && screens[index]) {
-        screens[index].remove();
-      }
-    });
+    for (let i = 1; i < screens.length; i++) {
+      screens[i].remove();
+      this.screens = []
+    }
   },
   resetTotal: function () {
     total.value = 0;
@@ -84,6 +83,11 @@ const appData = {
     fullTotalCount.value = 0;
     totalCountRollback.value = 0;
     totalCount.value = 0;
+    this.screenPrice = 0;
+    this.servicePricesNumber = 0;
+    this.servicePricesPercent = 0;
+    this.fullPrice = 0;
+    this.servicePercentPrice = 0;
   },
   changeBtns: function () {
     startBtn.style.display = 'block';
